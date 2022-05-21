@@ -1,12 +1,15 @@
-# FunctionsnIdentity
+# Azure Functions & Microsoft Identity
 In this repo, we have 2 samples which show case the usage of Microsoft identity platform in Azure Functions.
 
-Sample 1(KVDemo) uses Managed Identity and Keyvault. It showcases that you can fetch resources in Azure protected by Azure AD with out credentials or secrets etc.
+1. **Sample 1(KVDemo) uses Managed Identity and Keyvault**. It showcases that you can fetch resources in Azure protected by Azure AD with out credentials or secrets etc.
 
 We use Azure.Security.KeyVault.Secrets to fetch us a secret client and all the work of talking to IDP and getting a token is all handled by the SDK. If you compare the
 lines of code that SDK helps reduce is incrdible.
 
-Here's the snip of code if you were to use SDK,
+Firstly enable Managed Identity, you can do that in Azure Function App-> Identity : Turn on System assigned Mananaged Identity
+Now the Function app would be available in the Access Policies of Key Vault. Go to your keyvault resource add an Access policy for the above function.
+
+Here's the snip of code if you were to use SDK, ensure to add the right name of key vault, rest is all magic.
 
             var keyVaultName = ("name of Keyvault");
             var kvUri = $"https://{keyVaultName}.vault.azure.net";
@@ -29,6 +32,7 @@ public static HttpClient InitializeTokenClient() {
     };
     client.DefaultRequestHeaders.Add("Secret", Environment.GetEnvironmentVariable("MSI_SECRET"));
     return client;
+    
 }
 public static HttpClient tokenClient = InitializeTokenClient();
 public static async Task<string> GetToken(string resource, string apiversion)  {
