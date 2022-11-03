@@ -56,7 +56,8 @@ public static async Task<string> GetSecret(string secretName, string token, stri
     return keyVaultResponse["value"].ToString(); 
 }
 ```**
-2. Now in Sample 2 we see how to use Graph and Graph SDK in Functions.**
+
+2. Now in Sample 2 we see how to use Graph and Graph SDK in Functions.
 For this sample I am using Client credential flowessentially making my Azure Function a Daemon. This is handy in scenarios where we do not have a login experience To do that,
 
 1. Enable Application Permissions for all the permission your app uses. In my cases I just User.Read.All.
